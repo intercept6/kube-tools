@@ -21,7 +21,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /v.*/
+              only: /.*/
       - aws-ecr/build_and_push_image:
           name: "build-hash"
           executor: default
