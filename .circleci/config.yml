@@ -1,0 +1,30 @@
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@4.0.1
+
+executors:
+  default:
+    machine: true
+    environment:
+      ECR_REPO: "kube-tools"
+
+workflows:
+  build-push:
+    jobs:
+      - aws-ecr/build_and_push_image:
+          name: &build_version "build-version"
+          executor: default
+          repo: $ECR_REPO
+          create-repo: true
+          tag: $CIRCLE_TAG
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
+      - aws-ecr/build_and_push_image:
+          name: "build-hash"
+          executor: default
+          repo: $ECR_REPO
+          create-repo: true
+          tag: $CIRCLE_SHA1
