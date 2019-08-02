@@ -1,13 +1,14 @@
 FROM alpine:3.8
 
 ENV PIP_INSTALLER "https://bootstrap.pypa.io/get-pip.py"
-ENV AWS_CLI_VERSION "1.16.142"
+ENV AWS_CLI_VERSION "1.16.191"
 
 # Install dependent packages
 RUN apk --update --no-cache add \
     python3 \
     curl \
-    git
+    git \
+    nodejs
 
 # Install awscli
 RUN curl -s ${PIP_INSTALLER} | python3
